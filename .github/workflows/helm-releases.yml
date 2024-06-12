@@ -33,7 +33,7 @@ jobs:
           echo "${{ secrets.K8S_TOKEN }}" | base64 --decode > ~/.kube/token
           kubectl config set-credentials github-actions --token=$(cat ~/.kube/token)
           kubectl config set-context --current --user=github-actions
-          kubectl config view # Añadir esta línea para verificar el archivo
+          kubectl config view # Verificar el archivo kubeconfig
 
       - name: Helm upgrade kube-prometheus-stack
         run: |
