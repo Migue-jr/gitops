@@ -26,21 +26,26 @@ jobs:
         with:
           version: 'v1.18.0'
 
+      - name: Configure kubeconfig
+        run: |
+          mkdir -p ~/.kube
+          echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
+
       - name: Helm upgrade kube-prometheus-stack
         run: |
           helm upgrade --install kube-prometheus-stack prometheus-community/kube-prometheus-stack --namespace monitoring -f values-prometheus.yaml
         env:
-          KUBECONFIG: ${{ secrets.KUBECONFIG }}
+          KUBECONFIG: ~/.kube/config
 
       - name: Helm upgrade victoria-metrics
         run: |
           helm upgrade --install victoria-metrics victoriametrics/victoria-metrics-cluster --namespace victoria-metrics -f values-victoria.yaml
         env:
-          KUBECONFIG: ${{ secrets.KUBECONFIG }}
+          KUBECONFIG: ~/.kube/config
 
       - name: Helm upgrade argo-cd
         run: |
           helm upgrade --install argo-cd argo/argo-cd --namespace argocd -f values-argocd.yaml
         env:
-          KUBECONFIG: ${{ secrets.KUBECONFIG }}
-
+          KUBECONFIG: ~/.kube/config
+ 
