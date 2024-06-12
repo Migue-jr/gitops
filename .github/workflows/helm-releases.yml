@@ -31,6 +31,9 @@ jobs:
           mkdir -p ~/.kube
           echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
 
+      - name: Verify kubeconfig
+        run: cat ~/.kube/config
+
       - name: Helm upgrade kube-prometheus-stack
         run: |
           helm upgrade --install kube-prometheus-stack prometheus-community/kube-prometheus-stack --namespace monitoring -f values-prometheus.yaml
@@ -48,4 +51,4 @@ jobs:
           helm upgrade --install argo-cd argo/argo-cd --namespace argocd -f values-argocd.yaml
         env:
           KUBECONFIG: ~/.kube/config
- 
+
