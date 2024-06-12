@@ -30,6 +30,7 @@ jobs:
         run: |
           mkdir -p ~/.kube
           echo "${{ secrets.KUBECONFIG_CONTENT }}" > ~/.kube/config
+          kubectl config set-credentials github-actions --token=${{ secrets.K8S_TOKEN }}
           kubectl config set-context minikube --cluster=minikube --user=github-actions --namespace=default
           kubectl config use-context minikube
           kubectl config view # Verificar el archivo kubeconfig
