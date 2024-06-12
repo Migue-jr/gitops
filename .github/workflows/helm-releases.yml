@@ -30,9 +30,7 @@ jobs:
         run: |
           mkdir -p ~/.kube
           echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
-
-      - name: Verify kubeconfig
-        run: cat ~/.kube/config
+          kubectl config view # Añadir esta línea para verificar el archivo
 
       - name: Helm upgrade kube-prometheus-stack
         run: |
