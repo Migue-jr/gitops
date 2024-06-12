@@ -32,7 +32,8 @@ jobs:
           echo "${{ secrets.KUBECONFIG_CONTENT }}" > ~/.kube/config
           echo "${{ secrets.K8S_TOKEN }}" | base64 --decode > ~/.kube/token
           kubectl config set-credentials github-actions --token=$(cat ~/.kube/token)
-          kubectl config set-context --current --user=github-actions
+          kubectl config set-context github-actions --cluster=minikube --user=github-actions --namespace=default
+          kubectl config use-context github-actions
           kubectl config view # Verificar el archivo kubeconfig
 
       - name: Helm upgrade kube-prometheus-stack
