@@ -1,0 +1,7 @@
+server:
+  config:
+    url: https://argocd-server.argocd.svc.cluster.local:443
+    metrics:
+      enabled: true
+      allowedOrigins: '*'
+
